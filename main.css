@@ -1,0 +1,22 @@
+body {
+	margin: 0;
+}
+#three-canvas {
+	/* display: none; */
+	position: fixed;
+	left: 0;
+	top: 0;
+	/* z-index: 3; */
+}
+.sections{
+	position: relative;
+	z-index: 2;
+}
+.section{
+	/* border-top:2px solid green; */
+	box-sizing: border-box;
+	padding: 5rem;
+	height: 100vh;
+	font-size: 2rem;
+	color: white;
+}
