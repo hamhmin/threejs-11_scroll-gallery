@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 body {
 	margin: 0;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 #three-canvas {
 	/* display: none; */
@@ -10,7 +12,7 @@ body {
 }
 .sections{
 	position: relative;
-	z-index: 2;
+	z-index: 5;
 }
 .section{
 	/* border-top:2px solid green; */
@@ -19,23 +21,51 @@ body {
 	height: 100vh;
 	font-size: 2rem;
 	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
-#popup{
-	position: fixed;
+.section h3 {
+	font-weight: 500;
+}
+.section .text-box{
+	width: 70%;
+	height: 50%;
+	max-width: 800px;
+	max-height: 400px;
+}
+
+.section .text-box p{
+	font-size: 14px;
+
+}
+
+
+
+#pop-wrap{
 	display: none;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
+	z-index: 100;
+}
+#popup{
+
+	/* display: none; */
+	position: relative;
 	width: 80vmin;
 	height: 80vmin;
 	background: white;
 	object-fit: contain;
-	z-index: 100;
+
 }
 #popup #btn-close {
 	position: absolute;
-	top: -40px;
-	right: 20px;
+	padding: 20px 30px;
+	bottom: -100px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 #popup #btn-call {
 	position: absolute;
