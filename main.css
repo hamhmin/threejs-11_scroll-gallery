@@ -3,6 +3,20 @@ body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+
+.section, article, p{
+   -ms-overflow-style: none;
+}
+article::-webkit-scrollbar{
+  display:none;
+}
+p::-webkit-scrollbar{
+  display:none;
+}
+.section::-webkit-scrollbar{
+  display:none;
+}
+  display: none;
 #three-canvas {
 	/* display: none; */
 	position: fixed;
