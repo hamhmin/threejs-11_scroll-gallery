@@ -32,12 +32,12 @@ body {
 	width: 70%;
 	height: 50%;
 	max-width: 800px;
-	max-height: 400px;
+	max-height: 250px;
+	overflow: scroll;
 }
 
 .section .text-box p{
 	font-size: 14px;
-
 }
 
 
