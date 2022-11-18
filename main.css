@@ -16,7 +16,6 @@ p::-webkit-scrollbar{
 .section::-webkit-scrollbar{
   display:none;
 }
-  display: none;
 #three-canvas {
 	/* display: none; */
 	position: fixed;
