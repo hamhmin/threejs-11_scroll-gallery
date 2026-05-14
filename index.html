@@ -1,73 +1,271 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gallery.com/">
-    <meta property="og:title" content="디지털 아트 갤러리">
-    <meta property="og:image" content="./images/01.jpg">
-    <meta property="og:description" content="Three.js로 구현된 예술 작품 갤러리">
-    <meta property="og:site_name" content="Site Name">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <title>scroll-page-threejs</title>
-    <link rel="stylesheet" href="./main.css">
-    <script defer="defer" src="145.min.js"></script>
-    <script defer="defer" src="main.min.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Art Gallery — Scroll Exhibition" />
+    <meta property="og:description" content="Three.js 기반 스크롤 갤러리" />
+    <meta property="og:image" content="./images/01.jpg" />
+    <title>Art Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="./main.css" />
+    <script defer src="145.min.js"></script>
+    <script defer src="main.min.js"></script>
+  </head>
+  <body>
+    <!-- 로딩 화면 -->
+    <div id="loader">
+      <div id="loader-inner">
+        <div id="loader-logo">GALLERY</div>
+        <div id="loader-bar-wrap">
+          <div id="loader-bar"></div>
+        </div>
+        <div id="loader-text">Loading Exhibition</div>
+      </div>
+    </div>
+
     <canvas id="three-canvas"></canvas>
 
+    <!-- 섹션 텍스트 -->
     <div class="sections">
-        <!-- 01. 첫 번째: 붉은색 추상화 -->
-        <section class="section">
-            <h3>01. 붉은 선율 (Abstract Impasto)</h3>
-            <article class="text-box">
-                <p>물감을 두껍게 칠하는 임파스토 기법을 통해 캔버스 위에 강렬한 질감을 표현한 추상화입니다. 붉은색과 분홍색의 조화가 에너지를 전달하며, 구체적인 형태보다는 색채의 흐름 자체에 집중하게 만드는 현대 미술 작품입니다.</p>
-            </article>
-        </section>
-
-        <!-- 02. 두 번째: 프랜시스 베이컨 스타일 -->
-        <section class="section">
-            <h3>02. 내면의 투영 (Expressionist Portrait)</h3>
-            <article class="text-box">
-                <p>인간의 내면에 감춰진 고독이나 불안을 형상의 왜곡을 통해 보여주는 표현주의적 작품입니다. 어두운 배경과 대비되는 강렬한 얼굴의 묘사는 보는 이로 하여금 강한 감정적 울림을 느끼게 합니다.</p>
-            </article>
-        </section>
-
-        <!-- 03. 세 번째: 콜라주 초상화 -->
-        <section class="section">
-            <h3>03. 문화의 조각 (Pattern Collage)</h3>
-            <article class="text-box">
-                <p>다양한 기하학적 패턴과 화려한 직물의 질감을 결합하여 탄생한 콜라주 아트입니다. 서로 다른 조각들이 모여 하나의 조화로운 얼굴을 형성하는 모습은 현대 사회의 다양성과 복합적인 정체성을 상징합니다.</p>
-            </article>
-        </section>
-
-        <!-- 04. 네 번째: 론강의 별이 빛나는 밤 -->
-        <section class="section">
-            <h3>04. 론강의 별이 빛나는 밤 (Vincent van Gogh)</h3>
-            <article class="text-box">
-                <p>빈센트 반 고흐가 프랑스 아를에서 밤의 빛을 탐구하며 그린 걸작입니다. 밤하늘을 수놓은 별빛과 강물에 반사된 불빛이 소용돌이치는 듯한 붓터치와 어우러져 신비롭고 서정적인 밤의 풍경을 완성했습니다.</p>
-            </article>
-        </section>
-
-        <!-- 05. 다섯 번째: 그네 -->
-        <section class="section">
-            <h3>05. 그네 (Jean-Honoré Fragonard)</h3>
-            <article class="text-box">
-                <p>장 오노레 프라고나르의 1767년 작으로, 로코코 미술 특유의 화려함과 우아함이 돋보입니다. 숲속에서 그네를 타는 여인의 역동적인 드레스 자락과 빛의 묘사는 당시 귀족 사회의 낭만과 유희적 분위기를 잘 담아내고 있습니다.</p>
-            </article>
-        </section>
-    </div>
-
-    <div id="pop-wrap">
-        <div id="popup">
-            <img id="img" src="./images/01.jpg"> 
-            <button id="btn-close">X</button>
+      <section class="section">
+        <div class="section-inner">
+          <span class="section-num">01</span>
+          <h2 class="section-title">붉은 선율</h2>
+          <p class="section-sub">Abstract Impasto</p>
+          <p class="section-desc">
+            물감을 두껍게 칠하는 임파스토 기법을 통해 캔버스 위에 강렬한 질감을
+            표현한 추상화입니다. 붉은색과 분홍색의 조화가 에너지를 전달하며,
+            구체적인 형태보다는 색채의 흐름 자체에 집중하게 만드는 현대 미술
+            작품입니다.
+          </p>
+          <button class="view-btn" data-img="./images/01.jpg">작품 보기</button>
         </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <span class="section-num">02</span>
+          <h2 class="section-title">내면의 투영</h2>
+          <p class="section-sub">Expressionist Portrait</p>
+          <p class="section-desc">
+            인간의 내면에 감춰진 고독과 불안을 형상의 왜곡을 통해 보여주는
+            표현주의적 작품입니다. 어두운 배경과 대비되는 강렬한 얼굴의 묘사는
+            보는 이로 하여금 강한 감정적 울림을 느끼게 합니다.
+          </p>
+          <button class="view-btn" data-img="./images/02.jpg">작품 보기</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <span class="section-num">03</span>
+          <h2 class="section-title">문화의 조각</h2>
+          <p class="section-sub">Pattern Collage</p>
+          <p class="section-desc">
+            다양한 기하학적 패턴과 화려한 직물의 질감을 결합하여 탄생한 콜라주
+            아트입니다. 서로 다른 조각들이 모여 하나의 조화로운 얼굴을 형성하는
+            모습은 현대 사회의 다양성과 복합적인 정체성을 상징합니다.
+          </p>
+          <button class="view-btn" data-img="./images/03.jpg">작품 보기</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <span class="section-num">04</span>
+          <h2 class="section-title">론강의 별이 빛나는 밤</h2>
+          <p class="section-sub">Vincent van Gogh, 1888</p>
+          <p class="section-desc">
+            빈센트 반 고흐가 프랑스 아를에서 밤의 빛을 탐구하며 그린 걸작입니다.
+            밤하늘을 수놓은 별빛과 강물에 반사된 불빛이 소용돌이치는 붓터치와
+            어우러져 신비롭고 서정적인 밤의 풍경을 완성했습니다.
+          </p>
+          <button class="view-btn" data-img="./images/04.jpg">작품 보기</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <span class="section-num">05</span>
+          <h2 class="section-title">그네</h2>
+          <p class="section-sub">Jean-Honoré Fragonard, 1767</p>
+          <p class="section-desc">
+            로코코 미술 특유의 화려함과 우아함이 돋보이는 프라고나르의
+            대표작입니다. 숲속에서 그네를 타는 여인의 역동적인 드레스 자락과
+            빛의 묘사는 당시 귀족 사회의 낭만과 유희적 분위기를 잘 담아내고
+            있습니다.
+          </p>
+          <button class="view-btn" data-img="./images/05.jpg">작품 보기</button>
+        </div>
+      </section>
     </div>
-</body>
+
+    <!-- 스크롤 인디케이터 -->
+    <div id="scroll-indicator">
+      <span id="scroll-current">1</span>
+      <span class="scroll-sep">/</span>
+      <span id="scroll-total">5</span>
+    </div>
+
+    <!-- 팝업 -->
+    <div
+      id="pop-wrap"
+      role="dialog"
+      aria-modal="true"
+      aria-label="작품 상세 보기"
+    >
+      <div id="popup-overlay"></div>
+      <div id="popup">
+        <img id="popup-img" src="" alt="작품 이미지" style="display: none" />
+      </div>
+      <button id="btn-close" aria-label="닫기">✕</button>
+    </div>
+
+    <script>
+      // ── 로딩 화면 ───────────────────────────────────────────────
+      (function () {
+        const loader = document.getElementById("loader");
+        const bar = document.getElementById("loader-bar");
+        const loaderText = document.getElementById("loader-text");
+        const messages = [
+          "Loading Exhibition",
+          "Preparing Artwork",
+          "Almost There",
+        ];
+        let progress = 0;
+        let msgIdx = 0;
+
+        const tick = setInterval(() => {
+          // 80%까지는 빠르게, 이후 천천히
+          const step =
+            progress < 80 ? Math.random() * 12 + 4 : Math.random() * 3 + 1;
+          progress = Math.min(progress + step, 98);
+          bar.style.width = progress + "%";
+
+          // 메시지 교체
+          const newIdx = Math.floor(progress / 34);
+          if (newIdx !== msgIdx && newIdx < messages.length) {
+            msgIdx = newIdx;
+            loaderText.style.opacity = "0";
+            setTimeout(() => {
+              loaderText.textContent = messages[msgIdx];
+              loaderText.style.opacity = "1";
+            }, 300);
+          }
+        }, 120);
+
+        // 2.2초 후 강제 완료 후 페이드아웃
+        setTimeout(() => {
+          clearInterval(tick);
+          bar.style.width = "100%";
+          bar.style.transition = "width 0.3s ease";
+
+          setTimeout(() => {
+            loader.classList.add("done");
+            // 애니메이션 끝나면 DOM에서 제거
+            loader.addEventListener("transitionend", () => loader.remove(), {
+              once: true,
+            });
+          }, 350);
+        }, 2200);
+      })();
+
+      // ── 팝업 열기 (view-btn 클릭) ──────────────────────────────
+      function openPopup(src) {
+        const wrap = document.getElementById("pop-wrap");
+        const img = document.getElementById("popup-img");
+        img.style.display = "block";
+        img.src = src;
+        wrap.classList.add("active");
+        // main.min.js가 인라인 style.display 를 덮어쓸 수 있으므로 강제 재지정
+        wrap.style.cssText =
+          [
+            "position:fixed",
+            "top:0",
+            "left:0",
+            "right:0",
+            "bottom:0",
+            "width:100vw",
+            "height:100vh",
+            "display:flex",
+            "align-items:center",
+            "justify-content:center",
+            "z-index:9999",
+            "visibility:visible",
+            "opacity:1",
+            "pointer-events:auto",
+          ].join(" !important;") + " !important";
+        document.body.style.overflow = "hidden";
+      }
+
+      document.querySelectorAll(".view-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const src = btn.dataset.img;
+          if (src) openPopup(src);
+        });
+      });
+
+      // ── 팝업 닫기 ──────────────────────────────────────────────
+      function closePopup() {
+        const wrap = document.getElementById("pop-wrap");
+        wrap.classList.remove("active");
+        wrap.style.cssText =
+          [
+            "position:fixed",
+            "top:0",
+            "left:0",
+            "right:0",
+            "bottom:0",
+            "width:100vw",
+            "height:100vh",
+            "display:flex",
+            "align-items:center",
+            "justify-content:center",
+            "z-index:9999",
+            "visibility:hidden",
+            "opacity:0",
+            "pointer-events:none",
+          ].join(" !important;") + " !important";
+        document.body.style.overflow = "";
+      }
+
+      document
+        .getElementById("btn-close")
+        .addEventListener("click", closePopup);
+      document
+        .getElementById("popup-overlay")
+        .addEventListener("click", closePopup);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closePopup();
+      });
+
+      // ── 스크롤 인디케이터 + in-view 애니메이션 ─────────────────
+      const sections = document.querySelectorAll(".section");
+      const totalEl = document.getElementById("scroll-total");
+      const currEl = document.getElementById("scroll-current");
+      totalEl.textContent = sections.length;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              const idx = Array.from(sections).indexOf(entry.target) + 1;
+              currEl.textContent = idx;
+            } else {
+              // 섹션을 벗어나면 다시 숨김 (재진입 시 재생)
+              entry.target.classList.remove("in-view");
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+    </script>
+  </body>
 </html>
