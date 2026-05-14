@@ -367,38 +367,53 @@ html {
 
 /* ── 반응형 ───────────────────────────────────────────────── */
 
-/* 태블릿 이하: 패널 좌측 배치 */
+/* 태블릿 이하 */
 @media (max-width: 768px) {
   .section {
-    justify-content: center;
-    padding: 4vh 5vw;
-    align-items: flex-end;
-    padding-bottom: 10vh;
+    justify-content: flex-start;
+    align-items: flex-end; /* 패널 하단 고정 */
+    padding: 0;
   }
   .section-inner {
-    width: 100%;
+    width: 100vw;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: 1px solid rgba(200, 169, 110, 0.2);
+    padding: 20px 20px 24px;
+    gap: 10px;
+    /* 높이 제한 — 나머지 상단 공간에 작품이 보임 */
+    max-height: 45vh;
+    overflow-y: auto;
   }
   .section-title {
-    font-size: clamp(22px, 6vw, 30px);
+    font-size: clamp(20px, 5vw, 26px);
+  }
+  .section-desc {
+    -webkit-line-clamp: 3;
+    font-size: 12px;
+  }
+  .view-btn {
+    padding: 7px 16px;
+    font-size: 11px;
   }
   #scroll-indicator {
-    bottom: 20px;
+    bottom: 48vh; /* 패널 위로 올라오게 */
     right: 16px;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .section {
-    align-items: flex-end;
-    padding: 0 16px 80px;
-  }
   .section-inner {
-    padding: 20px 18px;
-    gap: 10px;
+    padding: 16px 16px 20px;
+    max-height: 42vh;
+    gap: 8px;
   }
   .section-desc {
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
+    font-size: 12px;
   }
   #popup {
     width: 95vw;
@@ -407,6 +422,10 @@ html {
     width: 32px;
     height: 32px;
     font-size: 12px;
+  }
+  #scroll-indicator {
+    bottom: 45vh;
+    right: 12px;
   }
 }
 
