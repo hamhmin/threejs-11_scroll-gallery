@@ -431,3 +431,644 @@ html {
 
 /* ── IntersectionObserver 애니메이션 트리거 ───────────────── */
 /* JS에서 .in-view 클래스 추가 시 발동 (index.html script 참고) */
+
+/* ── 언어/도슨트 컨트롤 (우상단) ─────────────────────────── */
+#controls {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#lang-toggle,
+#tts-stop {
+  background: rgba(13, 13, 13, 0.82);
+  border: 1px solid rgba(200, 169, 110, 0.4);
+  color: var(--accent);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#lang-toggle:hover,
+#tts-stop:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+#tts-stop {
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+/* ── 버튼 그룹 ────────────────────────────────────────────── */
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* TTS 버튼 */
+.tts-btn {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid rgba(200, 169, 110, 0.5);
+  color: var(--text-muted);
+  font-family: "Noto Serif KR", serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+.tts-btn:hover {
+  background: rgba(200, 169, 110, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.tts-btn.tts-active {
+  background: rgba(200, 169, 110, 0.2);
+  color: var(--accent);
+  border-color: var(--accent);
+  animation: tts-pulse 1.5s ease-in-out infinite;
+}
+@keyframes tts-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* QR 버튼 */
+.qr-btn {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid rgba(200, 169, 110, 0.5);
+  color: var(--text-muted);
+  font-family: "Noto Serif KR", serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+.qr-btn:hover {
+  background: rgba(200, 169, 110, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── QR 팝업 ──────────────────────────────────────────────── */
+#qr-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+#qr-wrap.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+#qr-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+#qr-popup {
+  position: relative;
+  z-index: 1;
+  background: #111;
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  min-width: 260px;
+}
+#qr-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-align: center;
+}
+#qr-code {
+  background: #f5f0e8;
+  padding: 12px;
+  border-radius: 4px;
+}
+#qr-code img,
+#qr-code canvas {
+  display: block;
+}
+#qr-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+}
+#qr-close {
+  background: transparent;
+  border: 1px solid rgba(200, 169, 110, 0.4);
+  color: var(--accent);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  padding: 7px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+#qr-close:hover {
+  background: rgba(200, 169, 110, 0.15);
+}
+
+/* ── 모바일 버튼 조정 ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .btn-row {
+    gap: 6px;
+  }
+  .tts-btn,
+  .qr-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+  #controls {
+    top: 12px;
+    right: 12px;
+  }
+  #lang-toggle {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  #qr-popup {
+    padding: 28px 24px;
+    min-width: 220px;
+  }
+}
+
+/* ── Mobile viewport fix: short browser height 대응 ─────────────
+   기존 42~45vh 패널에서는 397px 높이 모바일 브라우저에서 설명문이 거의 보이지 않아
+   모바일 패널을 조금 키우고, 내부 요소를 압축하며, 설명 영역을 독립 스크롤로 처리합니다. */
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .section {
+    min-height: 100svh;
+    height: 100svh;
+    align-items: flex-end;
+  }
+
+  .section-inner {
+    max-height: 54svh;
+    padding: 14px 16px 16px;
+    gap: 6px;
+    overscroll-behavior: contain;
+  }
+
+  .section-num {
+    font-size: 10px;
+  }
+
+  .section-title {
+    font-size: clamp(19px, 5.2vw, 24px);
+    line-height: 1.15;
+  }
+
+  .section-sub {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .section-inner::after {
+    margin: 1px 0;
+  }
+
+  .section-desc {
+    display: block;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: initial;
+    max-height: 4.8em;
+    overflow-y: auto;
+    font-size: 11.5px;
+    line-height: 1.6;
+    padding-right: 4px;
+  }
+
+  .btn-row {
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .view-btn,
+  .tts-btn,
+  .qr-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  #scroll-indicator {
+    bottom: calc(54svh + 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-inner {
+    max-height: 56svh;
+    padding: 12px 14px 14px;
+  }
+
+  .section-desc {
+    max-height: 4.6em;
+    font-size: 11px;
+    line-height: 1.55;
+  }
+
+  #scroll-indicator {
+    bottom: calc(56svh + 8px);
+  }
+}
+
+/* 430px 이하의 아주 낮은 모바일 브라우저/개발자도구 화면 대응 */
+@media (max-width: 768px) and (max-height: 430px) {
+  .section-inner {
+    max-height: 60svh;
+    padding: 10px 14px 12px;
+    gap: 4px;
+  }
+
+  .section-title {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  .section-sub {
+    font-size: 11px;
+  }
+
+  .section-desc {
+    max-height: 3.4em;
+    font-size: 10.8px;
+    line-height: 1.55;
+  }
+
+  .view-btn,
+  .tts-btn,
+  .qr-btn {
+    padding: 5px 9px;
+    font-size: 9.5px;
+  }
+
+  #scroll-indicator {
+    bottom: calc(60svh + 6px);
+  }
+}
+
+/* ── Mobile UX v2: fixed bottom docent panel ──────────────────
+   모바일에서 섹션 텍스트 박스가 화면을 위로 지나가며 스크롤되는 현상을 막고,
+   하단 고정 패널처럼 유지한 뒤 현재 섹션 내용만 페이드 전환합니다. */
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .sections {
+    z-index: 3;
+  }
+
+  .section {
+    position: relative;
+    min-height: 100svh;
+    height: 100svh;
+    padding: 0;
+    display: block;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .section-inner {
+    position: fixed;
+    left: max(14px, env(safe-area-inset-left));
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+    width: auto;
+    max-height: 48svh;
+    padding: 13px 15px 14px;
+    gap: 5px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .section.in-view .section-inner {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .section-title {
+    font-size: clamp(19px, 5vw, 24px);
+    line-height: 1.12;
+  }
+
+  .section-sub {
+    font-size: 11.5px;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    display: block;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: initial;
+    max-height: 4.6em;
+    overflow-y: auto;
+    font-size: 11px;
+    line-height: 1.55;
+    padding-right: 4px;
+  }
+
+  .btn-row {
+    margin-top: 4px;
+  }
+
+  #scroll-indicator {
+    position: fixed;
+    bottom: 6px;
+    z-index: 11;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 430px) {
+  .section-inner {
+    max-height: 52svh;
+    padding: 10px 14px 11px;
+    gap: 4px;
+  }
+
+  .section-title {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  .section-desc {
+    max-height: 3.2em;
+    font-size: 10.6px;
+    line-height: 1.5;
+  }
+
+  .btn-row {
+    margin-top: 3px;
+  }
+}
+
+/* ── Mobile UX v3: artwork-safe compact fixed panel ─────────────
+   하단 패널은 고정하되, 작은 모바일 브라우저 높이에서 작품을 덮지 않도록
+   패널 높이를 더 줄이고 설명 영역만 내부 스크롤로 처리합니다. */
+@media (max-width: 768px) {
+  .section-inner {
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, calc(env(safe-area-inset-bottom) + 10px));
+    max-height: min(38svh, 168px);
+    padding: 11px 14px 12px;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .section-num {
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: clamp(18px, 5vw, 22px);
+    line-height: 1.08;
+  }
+
+  .section-sub {
+    font-size: 10.5px;
+    line-height: 1.1;
+  }
+
+  .section-inner::after {
+    display: none;
+  }
+
+  .section-desc {
+    display: block;
+    max-height: 3.1em;
+    overflow-y: auto;
+    font-size: 10.5px;
+    line-height: 1.55;
+    padding-right: 4px;
+    overscroll-behavior: contain;
+  }
+
+  .btn-row {
+    gap: 6px;
+    margin-top: 3px;
+    flex-wrap: nowrap;
+  }
+
+  .view-btn,
+  .tts-btn,
+  .qr-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+    min-height: 28px;
+  }
+
+  #scroll-indicator {
+    bottom: 3px;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 430px) {
+  .section-inner {
+    max-height: min(36svh, 145px);
+    padding: 9px 13px 10px;
+    gap: 3px;
+  }
+
+  .section-desc {
+    max-height: 2.6em;
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .view-btn,
+  .tts-btn,
+  .qr-btn {
+    padding: 5px 9px;
+    font-size: 9.5px;
+    min-height: 26px;
+  }
+}
+
+/* ── Mobile UX v4: remove description height clamp ─────────────
+   작품 구도 조정 후 설명문 내부 높이 제한/내부 스크롤은 사용하지 않습니다. */
+@media (max-width: 768px) {
+  .section-inner {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .section-desc {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 430px) {
+  .section-inner {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .section-desc {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+/* ── QR button redesign v5: make it read visually as a QR button ────────── */
+.qr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0; /* hide raw text like "⬛ QR" and rebuild with pseudo-elements */
+  white-space: nowrap;
+}
+
+.qr-btn::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.95;
+  background:
+    /* top-left finder */
+    linear-gradient(currentColor 0 0) 2px 2px / 4px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 2px 2px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 5px 2px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 2px 5px / 4px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 3px 3px / 2px 2px no-repeat,
+    /* top-right finder */ linear-gradient(currentColor 0 0) 8px 2px / 4px 1px
+      no-repeat,
+    linear-gradient(currentColor 0 0) 8px 2px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 11px 2px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 8px 5px / 4px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 9px 3px / 2px 2px no-repeat,
+    /* bottom-left finder */ linear-gradient(currentColor 0 0) 2px 8px / 4px 1px
+      no-repeat,
+    linear-gradient(currentColor 0 0) 2px 8px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 5px 8px / 1px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 2px 11px / 4px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 3px 9px / 2px 2px no-repeat,
+    /* center/right data modules */ linear-gradient(currentColor 0 0) 8px 8px /
+      1px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 10px 8px / 1px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 9px 10px / 1px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 11px 10px / 1px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 8px 11px / 1px 1px no-repeat,
+    linear-gradient(currentColor 0 0) 10px 11px / 1px 1px no-repeat;
+}
+
+.qr-btn::after {
+  content: "QR";
+  font-family: "Noto Serif KR", serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: currentColor;
+}
+
+@media (max-width: 768px) {
+  .qr-btn {
+    gap: 6px;
+  }
+
+  .qr-btn::before {
+    width: 12px;
+    height: 12px;
+    flex-basis: 12px;
+    background-size: auto;
+    transform: translateY(-0.2px);
+  }
+
+  .qr-btn::after {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 430px) {
+  .qr-btn {
+    gap: 5px;
+  }
+
+  .qr-btn::before {
+    width: 11px;
+    height: 11px;
+    flex-basis: 11px;
+  }
+
+  .qr-btn::after {
+    font-size: 9.5px;
+  }
+}
