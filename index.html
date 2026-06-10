@@ -11,6 +11,8 @@
     <title>Art Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="./main.css" />
+    <!-- QR 코드 생성 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script defer src="145.min.js"></script>
     <script defer src="main.min.js"></script>
   </head>
@@ -28,77 +30,178 @@
 
     <canvas id="three-canvas"></canvas>
 
+    <!-- 언어 + 도슨트 컨트롤 (우상단 고정) -->
+    <div id="controls">
+      <button id="lang-toggle" title="언어 전환">KO</button>
+      <button id="tts-stop" title="음성 중지" style="display: none">■</button>
+    </div>
+
     <!-- 섹션 텍스트 -->
     <div class="sections">
-      <section class="section">
+      <!-- 01 -->
+      <section class="section" id="section-1">
         <div class="section-inner">
           <span class="section-num">01</span>
-          <h2 class="section-title">붉은 선율</h2>
+          <h2 class="section-title" data-ko="붉은 선율" data-en="Red Melody">
+            붉은 선율
+          </h2>
           <p class="section-sub">Abstract Impasto</p>
-          <p class="section-desc">
+          <p
+            class="section-desc"
+            data-ko="물감을 두껍게 칠하는 임파스토 기법을 통해 캔버스 위에 강렬한 질감을 표현한 추상화입니다. 붉은색과 분홍색의 조화가 에너지를 전달하며, 구체적인 형태보다는 색채의 흐름 자체에 집중하게 만드는 현대 미술 작품입니다."
+            data-en="An abstract painting expressing intense texture on canvas through the impasto technique of applying thick paint. The harmony of reds and pinks conveys energy, drawing attention to the flow of color itself rather than any specific form."
+          >
             물감을 두껍게 칠하는 임파스토 기법을 통해 캔버스 위에 강렬한 질감을
             표현한 추상화입니다. 붉은색과 분홍색의 조화가 에너지를 전달하며,
             구체적인 형태보다는 색채의 흐름 자체에 집중하게 만드는 현대 미술
             작품입니다.
           </p>
-          <button class="view-btn" data-img="./images/01.jpg">작품 보기</button>
+          <div class="btn-row">
+            <button class="view-btn" data-img="./images/01.jpg">
+              작품 보기
+            </button>
+            <button class="tts-btn" data-section="0" title="AI 도슨트">
+              🔊 도슨트
+            </button>
+            <button class="qr-btn" data-section="0" title="QR 코드">
+              ⬛ QR
+            </button>
+          </div>
         </div>
       </section>
 
-      <section class="section">
+      <!-- 02 -->
+      <section class="section" id="section-2">
         <div class="section-inner">
           <span class="section-num">02</span>
-          <h2 class="section-title">내면의 투영</h2>
+          <h2
+            class="section-title"
+            data-ko="내면의 투영"
+            data-en="Inner Projection"
+          >
+            내면의 투영
+          </h2>
           <p class="section-sub">Expressionist Portrait</p>
-          <p class="section-desc">
+          <p
+            class="section-desc"
+            data-ko="인간의 내면에 감춰진 고독과 불안을 형상의 왜곡을 통해 보여주는 표현주의적 작품입니다. 어두운 배경과 대비되는 강렬한 얼굴의 묘사는 보는 이로 하여금 강한 감정적 울림을 느끼게 합니다."
+            data-en="An expressionist work that reveals the loneliness and anxiety hidden within the human interior through the distortion of form. The intense depiction of a face contrasted against a dark background evokes strong emotional resonance in the viewer."
+          >
             인간의 내면에 감춰진 고독과 불안을 형상의 왜곡을 통해 보여주는
             표현주의적 작품입니다. 어두운 배경과 대비되는 강렬한 얼굴의 묘사는
             보는 이로 하여금 강한 감정적 울림을 느끼게 합니다.
           </p>
-          <button class="view-btn" data-img="./images/02.jpg">작품 보기</button>
+          <div class="btn-row">
+            <button class="view-btn" data-img="./images/02.jpg">
+              작품 보기
+            </button>
+            <button class="tts-btn" data-section="1" title="AI 도슨트">
+              🔊 도슨트
+            </button>
+            <button class="qr-btn" data-section="1" title="QR 코드">
+              ⬛ QR
+            </button>
+          </div>
         </div>
       </section>
 
-      <section class="section">
+      <!-- 03 -->
+      <section class="section" id="section-3">
         <div class="section-inner">
           <span class="section-num">03</span>
-          <h2 class="section-title">문화의 조각</h2>
+          <h2
+            class="section-title"
+            data-ko="문화의 조각"
+            data-en="Fragment of Culture"
+          >
+            문화의 조각
+          </h2>
           <p class="section-sub">Pattern Collage</p>
-          <p class="section-desc">
+          <p
+            class="section-desc"
+            data-ko="다양한 기하학적 패턴과 화려한 직물의 질감을 결합하여 탄생한 콜라주 아트입니다. 서로 다른 조각들이 모여 하나의 조화로운 얼굴을 형성하는 모습은 현대 사회의 다양성과 복합적인 정체성을 상징합니다."
+            data-en="A collage art born from combining diverse geometric patterns and the texture of vibrant fabrics. The way different fragments come together to form one harmonious face symbolizes the diversity and complex identity of modern society."
+          >
             다양한 기하학적 패턴과 화려한 직물의 질감을 결합하여 탄생한 콜라주
             아트입니다. 서로 다른 조각들이 모여 하나의 조화로운 얼굴을 형성하는
             모습은 현대 사회의 다양성과 복합적인 정체성을 상징합니다.
           </p>
-          <button class="view-btn" data-img="./images/03.jpg">작품 보기</button>
+          <div class="btn-row">
+            <button class="view-btn" data-img="./images/03.jpg">
+              작품 보기
+            </button>
+            <button class="tts-btn" data-section="2" title="AI 도슨트">
+              🔊 도슨트
+            </button>
+            <button class="qr-btn" data-section="2" title="QR 코드">
+              ⬛ QR
+            </button>
+          </div>
         </div>
       </section>
 
-      <section class="section">
+      <!-- 04 -->
+      <section class="section" id="section-4">
         <div class="section-inner">
           <span class="section-num">04</span>
-          <h2 class="section-title">론강의 별이 빛나는 밤</h2>
+          <h2
+            class="section-title"
+            data-ko="론강의 별이 빛나는 밤"
+            data-en="Starry Night Over the Rhône"
+          >
+            론강의 별이 빛나는 밤
+          </h2>
           <p class="section-sub">Vincent van Gogh, 1888</p>
-          <p class="section-desc">
+          <p
+            class="section-desc"
+            data-ko="빈센트 반 고흐가 프랑스 아를에서 밤의 빛을 탐구하며 그린 걸작입니다. 밤하늘을 수놓은 별빛과 강물에 반사된 불빛이 소용돌이치는 붓터치와 어우러져 신비롭고 서정적인 밤의 풍경을 완성했습니다."
+            data-en="A masterpiece painted by Vincent van Gogh while exploring the light of night in Arles, France. Starlight embroidering the night sky and the reflections of lights on the river merge with swirling brushstrokes to complete a mysterious and lyrical nocturnal landscape."
+          >
             빈센트 반 고흐가 프랑스 아를에서 밤의 빛을 탐구하며 그린 걸작입니다.
             밤하늘을 수놓은 별빛과 강물에 반사된 불빛이 소용돌이치는 붓터치와
             어우러져 신비롭고 서정적인 밤의 풍경을 완성했습니다.
           </p>
-          <button class="view-btn" data-img="./images/04.jpg">작품 보기</button>
+          <div class="btn-row">
+            <button class="view-btn" data-img="./images/04.jpg">
+              작품 보기
+            </button>
+            <button class="tts-btn" data-section="3" title="AI 도슨트">
+              🔊 도슨트
+            </button>
+            <button class="qr-btn" data-section="3" title="QR 코드">
+              ⬛ QR
+            </button>
+          </div>
         </div>
       </section>
 
-      <section class="section">
+      <!-- 05 -->
+      <section class="section" id="section-5">
         <div class="section-inner">
           <span class="section-num">05</span>
-          <h2 class="section-title">그네</h2>
+          <h2 class="section-title" data-ko="그네" data-en="The Swing">그네</h2>
           <p class="section-sub">Jean-Honoré Fragonard, 1767</p>
-          <p class="section-desc">
+          <p
+            class="section-desc"
+            data-ko="로코코 미술 특유의 화려함과 우아함이 돋보이는 프라고나르의 대표작입니다. 숲속에서 그네를 타는 여인의 역동적인 드레스 자락과 빛의 묘사는 당시 귀족 사회의 낭만과 유희적 분위기를 잘 담아내고 있습니다."
+            data-en="A masterpiece by Fragonard showcasing the splendor and elegance unique to Rococo art. The dynamic folds of the dress of a woman swinging in the forest and the depiction of light beautifully capture the romance and playful atmosphere of the aristocratic society of the time."
+          >
             로코코 미술 특유의 화려함과 우아함이 돋보이는 프라고나르의
             대표작입니다. 숲속에서 그네를 타는 여인의 역동적인 드레스 자락과
             빛의 묘사는 당시 귀족 사회의 낭만과 유희적 분위기를 잘 담아내고
             있습니다.
           </p>
-          <button class="view-btn" data-img="./images/05.jpg">작품 보기</button>
+          <div class="btn-row">
+            <button class="view-btn" data-img="./images/05.jpg">
+              작품 보기
+            </button>
+            <button class="tts-btn" data-section="4" title="AI 도슨트">
+              🔊 도슨트
+            </button>
+            <button class="qr-btn" data-section="4" title="QR 코드">
+              ⬛ QR
+            </button>
+          </div>
         </div>
       </section>
     </div>
@@ -110,7 +213,7 @@
       <span id="scroll-total">5</span>
     </div>
 
-    <!-- 팝업 -->
+    <!-- 작품 팝업 -->
     <div
       id="pop-wrap"
       role="dialog"
@@ -124,8 +227,76 @@
       <button id="btn-close" aria-label="닫기">✕</button>
     </div>
 
+    <!-- QR 팝업 -->
+    <div id="qr-wrap" role="dialog" aria-modal="true" aria-label="QR 코드">
+      <div id="qr-overlay"></div>
+      <div id="qr-popup">
+        <p id="qr-title">작품 도슨트 QR</p>
+        <div id="qr-code"></div>
+        <p id="qr-desc">
+          스마트폰으로 스캔하면<br />AI 도슨트 음성 안내를 들을 수 있습니다
+        </p>
+        <button id="qr-close">✕ 닫기</button>
+      </div>
+    </div>
+
     <script>
-      // ── 로딩 화면 ───────────────────────────────────────────────
+      // ═══════════════════════════════════════════════════════
+      // 데이터: 섹션별 작품 정보
+      // ═══════════════════════════════════════════════════════
+      const ARTWORKS = [
+        {
+          titleKo: "붉은 선율",
+          titleEn: "Red Melody",
+          descKo:
+            "임파스토 기법으로 두텁게 쌓아 올린 붉은 물감이 강렬한 에너지를 만들어냅니다. 추상표현주의 특유의 즉흥성과 감성이 담긴 이 작품은 색채 그 자체가 언어가 되는 순간을 포착합니다.",
+          descEn:
+            "Thick red paint built up through the impasto technique creates intense energy. Capturing the improvisational spirit of Abstract Expressionism, this work is a moment where color itself becomes language.",
+        },
+        {
+          titleKo: "내면의 투영",
+          titleEn: "Inner Projection",
+          descKo:
+            "왜곡된 형상 속에 숨겨진 인간의 고독과 불안을 표현주의적 시선으로 담아낸 작품입니다. 어둠과 빛의 대비가 내면 깊은 곳의 감정을 수면 위로 끌어올립니다.",
+          descEn:
+            "An expressionist exploration of the loneliness and anxiety hidden within distorted form. The contrast of darkness and light brings the deepest emotions to the surface.",
+        },
+        {
+          titleKo: "문화의 조각",
+          titleEn: "Fragment of Culture",
+          descKo:
+            "다양한 문화권의 패턴과 직물을 콜라주하여 탄생한 복합적 정체성의 초상입니다. 서로 다른 조각들이 하나의 얼굴을 이루듯, 우리 사회의 다양성이 하나의 아름다움으로 수렴됩니다.",
+          descEn:
+            "A portrait of complex identity born from collaging patterns and fabrics from diverse cultures. Just as different fragments form one face, the diversity of our society converges into a single beauty.",
+        },
+        {
+          titleKo: "론강의 별이 빛나는 밤",
+          titleEn: "Starry Night Over the Rhône",
+          descKo:
+            "반 고흐가 1888년 아를에서 그린 이 작품은 밤하늘의 별빛과 강 위에 일렁이는 빛을 소용돌이치는 붓터치로 표현했습니다. 도시의 불빛이 강물에 반사되는 서정적인 순간을 영원으로 포착한 걸작입니다.",
+          descEn:
+            "Painted by Van Gogh in Arles in 1888, this work captures the starlight and shimmering reflections on the river with swirling brushstrokes. A masterpiece that freezes a lyrical moment of city lights reflected in water into eternity.",
+        },
+        {
+          titleKo: "그네",
+          titleEn: "The Swing",
+          descKo:
+            "프라고나르의 1767년 작품으로 로코코 시대의 화려함과 유희를 상징합니다. 숲속에서 그네를 타는 귀족 여인의 드레스 자락과 부드러운 빛의 묘사가 당대 귀족 사회의 낭만을 생생히 전달합니다.",
+          descEn:
+            "Fragonard's 1767 work symbolizes the splendor and playfulness of the Rococo era. The flowing dress of a noblewoman swinging in a forest and the soft depiction of light vividly convey the romance of aristocratic society.",
+        },
+      ];
+
+      // ═══════════════════════════════════════════════════════
+      // 상태
+      // ═══════════════════════════════════════════════════════
+      let currentLang = "ko"; // 'ko' | 'en'
+      let ttsUtterance = null;
+      let isSpeaking = false;
+
+      // ═══════════════════════════════════════════════════════
+      // 로딩 화면
+      // ═══════════════════════════════════════════════════════
       (function () {
         const loader = document.getElementById("loader");
         const bar = document.getElementById("loader-bar");
@@ -135,17 +306,13 @@
           "Preparing Artwork",
           "Almost There",
         ];
-        let progress = 0;
-        let msgIdx = 0;
-
+        let progress = 0,
+          msgIdx = 0;
         const tick = setInterval(() => {
-          // 80%까지는 빠르게, 이후 천천히
           const step =
             progress < 80 ? Math.random() * 12 + 4 : Math.random() * 3 + 1;
           progress = Math.min(progress + step, 98);
           bar.style.width = progress + "%";
-
-          // 메시지 교체
           const newIdx = Math.floor(progress / 34);
           if (newIdx !== msgIdx && newIdx < messages.length) {
             msgIdx = newIdx;
@@ -156,16 +323,12 @@
             }, 300);
           }
         }, 120);
-
-        // 2.2초 후 강제 완료 후 페이드아웃
         setTimeout(() => {
           clearInterval(tick);
           bar.style.width = "100%";
           bar.style.transition = "width 0.3s ease";
-
           setTimeout(() => {
             loader.classList.add("done");
-            // 애니메이션 끝나면 DOM에서 제거
             loader.addEventListener("transitionend", () => loader.remove(), {
               once: true,
             });
@@ -173,14 +336,162 @@
         }, 2200);
       })();
 
-      // ── 팝업 열기 (view-btn 클릭) ──────────────────────────────
+      // ═══════════════════════════════════════════════════════
+      // 다국어 전환
+      // ═══════════════════════════════════════════════════════
+      const langToggle = document.getElementById("lang-toggle");
+
+      function applyLang(lang) {
+        currentLang = lang;
+        langToggle.textContent = lang === "ko" ? "EN" : "KO";
+        langToggle.title =
+          lang === "ko" ? "Switch to English" : "한국어로 전환";
+
+        // 제목 교체
+        document.querySelectorAll(".section-title[data-ko]").forEach((el) => {
+          el.textContent = lang === "ko" ? el.dataset.ko : el.dataset.en;
+        });
+        // 설명 교체
+        document.querySelectorAll(".section-desc[data-ko]").forEach((el) => {
+          el.textContent = lang === "ko" ? el.dataset.ko : el.dataset.en;
+        });
+        // 버튼 텍스트
+        document.querySelectorAll(".view-btn").forEach((btn) => {
+          btn.textContent = lang === "ko" ? "작품 보기" : "View Work";
+        });
+        document.querySelectorAll(".tts-btn").forEach((btn) => {
+          btn.textContent = lang === "ko" ? "🔊 도슨트" : "🔊 Docent";
+        });
+      }
+
+      langToggle.addEventListener("click", () => {
+        stopTTS();
+        applyLang(currentLang === "ko" ? "en" : "ko");
+      });
+
+      // ═══════════════════════════════════════════════════════
+      // TTS 도슨트
+      // ═══════════════════════════════════════════════════════
+      const ttsStop = document.getElementById("tts-stop");
+
+      function stopTTS() {
+        if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+        isSpeaking = false;
+        ttsStop.style.display = "none";
+        document
+          .querySelectorAll(".tts-btn")
+          .forEach((b) => b.classList.remove("tts-active"));
+      }
+
+      function speakSection(idx, btn) {
+        if (!window.speechSynthesis) {
+          alert("이 브라우저는 음성 기능을 지원하지 않습니다.");
+          return;
+        }
+        stopTTS();
+
+        const art = ARTWORKS[idx];
+        const isKo = currentLang === "ko";
+        const title = isKo ? art.titleKo : art.titleEn;
+        const desc = isKo ? art.descKo : art.descEn;
+        const text = isKo ? `${title}. ${desc}` : `${title}. ${desc}`;
+
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = isKo ? "ko-KR" : "en-US";
+        utter.rate = 0.92;
+        utter.pitch = 1.0;
+
+        utter.onstart = () => {
+          isSpeaking = true;
+          ttsStop.style.display = "flex";
+          btn.classList.add("tts-active");
+        };
+        utter.onend = () => {
+          isSpeaking = false;
+          ttsStop.style.display = "none";
+          btn.classList.remove("tts-active");
+        };
+        utter.onerror = () => stopTTS();
+
+        ttsUtterance = utter;
+        window.speechSynthesis.speak(utter);
+      }
+
+      ttsStop.addEventListener("click", stopTTS);
+
+      document.querySelectorAll(".tts-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const idx = parseInt(btn.dataset.section);
+          if (btn.classList.contains("tts-active")) {
+            stopTTS();
+          } else {
+            speakSection(idx, btn);
+          }
+        });
+      });
+
+      // ═══════════════════════════════════════════════════════
+      // QR 코드
+      // ═══════════════════════════════════════════════════════
+      const qrWrap = document.getElementById("qr-wrap");
+      const qrCodeDiv = document.getElementById("qr-code");
+      const qrTitle = document.getElementById("qr-title");
+      let qrInstance = null;
+
+      function openQR(idx) {
+        // QR이 가리킬 URL — 현재 페이지 + 섹션 해시
+        const baseUrl = window.location.href.split("#")[0];
+        const url = `${baseUrl}#section-${idx + 1}`;
+        const art = ARTWORKS[idx];
+        const title = currentLang === "ko" ? art.titleKo : art.titleEn;
+
+        qrTitle.textContent =
+          currentLang === "ko"
+            ? `「${title}」 도슨트 QR`
+            : `"${title}" Docent QR`;
+
+        // 기존 QR 제거
+        qrCodeDiv.innerHTML = "";
+        qrInstance = new QRCode(qrCodeDiv, {
+          text: url,
+          width: 180,
+          height: 180,
+          colorDark: "#1a1a1a",
+          colorLight: "#f5f0e8",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+
+        qrWrap.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeQR() {
+        qrWrap.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".qr-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openQR(parseInt(btn.dataset.section));
+        });
+      });
+
+      document.getElementById("qr-overlay").addEventListener("click", closeQR);
+      document.getElementById("qr-close").addEventListener("click", closeQR);
+
+      // ═══════════════════════════════════════════════════════
+      // 작품 팝업
+      // ═══════════════════════════════════════════════════════
       function openPopup(src) {
         const wrap = document.getElementById("pop-wrap");
         const img = document.getElementById("popup-img");
         img.style.display = "block";
         img.src = src;
         wrap.classList.add("active");
-        // main.min.js가 인라인 style.display 를 덮어쓸 수 있으므로 강제 재지정
         wrap.style.cssText =
           [
             "position:fixed",
@@ -209,7 +520,6 @@
         });
       });
 
-      // ── 팝업 닫기 ──────────────────────────────────────────────
       function closePopup() {
         const wrap = document.getElementById("pop-wrap");
         wrap.classList.remove("active");
@@ -233,6 +543,10 @@
         document.body.style.overflow = "";
       }
 
+      // Three.js 파일에서도 같은 팝업 함수를 재사용할 수 있게 전역에 노출
+      window.openPopup = openPopup;
+      window.closePopup = closePopup;
+
       document
         .getElementById("btn-close")
         .addEventListener("click", closePopup);
@@ -240,10 +554,16 @@
         .getElementById("popup-overlay")
         .addEventListener("click", closePopup);
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closePopup();
+        if (e.key === "Escape") {
+          closePopup();
+          closeQR();
+          stopTTS();
+        }
       });
 
-      // ── 스크롤 인디케이터 + in-view 애니메이션 ─────────────────
+      // ═══════════════════════════════════════════════════════
+      // 스크롤 인디케이터 + 페이드인
+      // ═══════════════════════════════════════════════════════
       const sections = document.querySelectorAll(".section");
       const totalEl = document.getElementById("scroll-total");
       const currEl = document.getElementById("scroll-current");
@@ -257,7 +577,6 @@
               const idx = Array.from(sections).indexOf(entry.target) + 1;
               currEl.textContent = idx;
             } else {
-              // 섹션을 벗어나면 다시 숨김 (재진입 시 재생)
               entry.target.classList.remove("in-view");
             }
           });
